@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:background="@color/my_primary">
 
     <ImageButton
         android:id="@+id/back_button"
@@ -11,57 +12,74 @@
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
         android:background="?android:attr/selectableItemBackground"
-        android:src="@drawable/baseline_arrow_back_24"/>
+        android:src="@drawable/baseline_arrow_back_24" />
 
     <TextView
         android:id="@+id/projectTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="24sp"
-        android:text="Project Title" />
+        android:textSize="32sp"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/white"
+        android:text="Project Title"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/projectDescription"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="18sp"
+        android:textSize="20sp"
         android:layout_below="@id/projectTitle"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/white"
+        android:alpha="0.7"
         android:text="Project Description" />
 
     <TextView
         android:id="@+id/projectDates"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="14sp"
+        android:textSize="18sp"
         android:layout_below="@id/projectDescription"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/white"
         android:text="Start Date - End Date" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/tasksRecyclerView"
-        android:layout_width="400dp"
-        android:layout_height="400dp"
-        android:layout_above="@id/createTaskButton"
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_below="@id/projectDates"
-        android:visibility="visible"/>
+        android:layout_marginTop="15dp"
+        app:cardCornerRadius="28dp"
+        android:layout_marginBottom="-20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/tasksRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="visible" />
+
+    </androidx.cardview.widget.CardView>
 
     <TextView
         android:id="@+id/noTasksTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Create new tasks!"
-        android:visibility="gone"
-    />
-
-    <!-- ... other XML elements ... -->
-
+        android:layout_centerInParent="true"
+        android:textSize="20sp"
+        android:textColor="@color/white"
+        android:visibility="gone" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/createTaskButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:layout_marginTop="5dp"
-        android:layout_marginLeft="335dp"
+        android:layout_margin="16dp"
+        android:layout_alignParentEnd="true"
+        android:layout_above="@+id/deleteProjectButton"
         android:src="@drawable/baseline_add_24"
         app:fabSize="normal" />
 
@@ -70,13 +88,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Delete Project"
-        android:layout_above="@id/optionsButton" />
+        android:layout_above="@id/optionsButton"
+        android:backgroundTint="@color/black"
+        android:textColor="@color/white"
+        android:textSize="18sp" />
 
     <Button
         android:id="@+id/optionsButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Options"
-        android:layout_alignParentBottom="true" />
+        android:layout_alignParentBottom="true"
+        android:backgroundTint="@color/black"
+        android:textColor="@color/white"
+        android:textSize="18sp" />
 
 </RelativeLayout>

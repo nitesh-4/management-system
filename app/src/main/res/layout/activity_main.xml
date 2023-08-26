@@ -3,55 +3,65 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp">
+    android:background="@color/my_primary">
 
-    <!-- Welcome Text -->
-
-    <!-- Profile Image -->
-
-    <TextView
-        android:id="@+id/welcomeText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="17dp"
-        android:layout_marginTop="24dp"
-        android:text="Welcome, [UserName]"
-        android:textSize="18sp"
-        android:textStyle="bold" />
-
-    <!-- RecyclerView for Projects (or other components) -->
-    <ImageButton
-        android:id="@+id/profileImageButton"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="10dp"
-        android:background="@drawable/circle_image"
-        android:contentDescription="User Profile Image"
-        android:src="@drawable/user" />
-    <TextView
-        android:id="@+id/emptyProjectsText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:text="CREATE NEW PROJECTS"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:visibility="gone" /> <!-- Initially hidden -->
-
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/projectsRecyclerView"
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/welcomeText"
-        android:layout_marginTop="92dp" />
+        android:layout_height="match_parent"
+        android:layout_marginTop="150dp"
+        app:cardCornerRadius="28dp"
+        android:elevation="8dp">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
 
+            <!-- Welcome Text -->
+            <TextView
+                android:id="@+id/welcomeText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="24dp"
+                android:text="Welcome, [UserName]"
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
+            <!-- Profile Image -->
+            <ImageButton
+                android:id="@+id/profileImageButton"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/circle_image"
+                android:contentDescription="User Profile Image"
+                android:src="@drawable/user" />
+
+            <!-- RecyclerView for Projects (or other components) -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/projectsRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp" />
+
+            <TextView
+                android:id="@+id/emptyProjectsText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="16dp"
+                android:text="CREATE NEW PROJECTS"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:visibility="gone" /> <!-- Initially hidden -->
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <!-- Floating Action Button -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_add_project"
         android:layout_width="wrap_content"
@@ -63,6 +73,32 @@
         android:contentDescription="Create New Project"
         app:srcCompat="@drawable/baseline_add_24" />
 
+    <!-- Header outside the card similar to login -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_alignParentTop="true"
+        android:padding="16dp"
+        android:gravity="center_horizontal">
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Welcome to CONNECTED"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:textSize="32dp"
+            android:fontFamily="sans-serif-medium" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Your personalised dashboard"
+            android:alpha="0.7"
+            android:textColor="@color/white"
+            android:textSize="18dp" />
+
+    </LinearLayout>
 
 </RelativeLayout>
