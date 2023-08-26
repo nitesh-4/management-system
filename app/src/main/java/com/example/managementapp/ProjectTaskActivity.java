@@ -2,6 +2,7 @@ package com.example.managementapp;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -17,16 +18,29 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+import androidx.recyclerview.widget.LinearLayoutManager;
+
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class ProjectTaskActivity extends AppCompatActivity {
-    private TextView projectTitle, projectDescription, projectDates;
-    private RecyclerView tasksRecyclerView;
-    private FloatingActionButton createTaskButton;
-    private Button deleteProjectButton, optionsButton;
+     TextView projectTitle, projectDescription, projectDates;
+    TextView noTasksTextView;
+     RecyclerView tasksRecyclerView;
+     FloatingActionButton createTaskButton;
+     Button deleteProjectButton, optionsButton;
     FirebaseAuth auth = FirebaseAuth.getInstance();  // Initialize auth here
-    private Project selectedProject;
-    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+     Project selectedProject;
+     FirebaseFirestore db = FirebaseFirestore.getInstance();
+     TaskAdapter taskAdapter;
+
+    List<Task> tasks = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,11 +59,15 @@ public class ProjectTaskActivity extends AppCompatActivity {
             finish();
             return;
         }
-
+        noTasksTextView = findViewById(R.id.noTasksTextView);
         projectTitle = findViewById(R.id.projectTitle);
         projectDescription = findViewById(R.id.projectDescription);
         projectDates = findViewById(R.id.projectDates);
         tasksRecyclerView = findViewById(R.id.tasksRecyclerView);
+        tasksRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        taskAdapter = new TaskAdapter(this,tasks);
+        tasksRecyclerView.setAdapter(taskAdapter);
+
 
         deleteProjectButton = findViewById(R.id.deleteProjectButton);
         optionsButton = findViewById(R.id.optionsButton);
@@ -71,19 +89,72 @@ public class ProjectTaskActivity extends AppCompatActivity {
         createTaskButton.setOnClickListener(v -> {
             Intent intent = new Intent(ProjectTaskActivity.this, TaskCreationActivity.class);
             intent.putExtra("projectId", selectedProject.getId());
+            intent.putExtra("selected_project", selectedProject);  // Pass the entire project
             startActivity(intent);
         });
 
-        optionsButton.setOnClickListener(this::showPopupMenu);
 
+
+        optionsButton.setOnClickListener(this::showPopupMenu);
+        db = FirebaseFirestore.getInstance();
         fetchTasksForProject();
+
+
     }
+
+    // ... The start of your ProjectTaskActivity code remains the same ...
 
     private void fetchTasksForProject() {
-        // You can use the `tasksRecyclerView` to display the tasks here.
-        // Fetch tasks associated with the selectedProject and update the tasksRecyclerView using an adapter.
-        // Make sure to fetch the tasks from the user's sub-collection.
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+
+        if (currentUser == null) {
+            Toast.makeText(ProjectTaskActivity.this, "User not authenticated!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        String currentUserId = currentUser.getUid();
+
+        db.collection("users")
+                .document(currentUserId)
+                .collection("projects")
+                .document(selectedProject.getId())
+                .collection("tasks")
+                .get()
+                .addOnCompleteListener(taskResult -> {
+                    if (taskResult.isSuccessful()) {
+                        List<Task> tasksList = new ArrayList<>();
+                        for (QueryDocumentSnapshot document : taskResult.getResult()) {
+                            Task taskItem = document.toObject(Task.class);
+                            tasksList.add(taskItem);
+                        }
+
+                        if(taskAdapter == null) {
+                            taskAdapter = new TaskAdapter(this, tasksList);
+                            tasksRecyclerView.setAdapter(taskAdapter);
+                        } else {
+                            taskAdapter.updateData(tasksList);
+                            taskAdapter.notifyDataSetChanged();
+                        }
+
+                        // Hide or show the noTasksTextView based on the tasks list size
+                        if (tasksList.isEmpty()) {
+                            noTasksTextView.setVisibility(View.VISIBLE);
+                        } else {
+                            noTasksTextView.setVisibility(View.GONE);
+                        }
+
+                        Log.d("DEBUG", "Adapter set with tasks: " + tasksList.size());
+                    } else {
+                        Toast.makeText(ProjectTaskActivity.this, "Error fetching tasks.", Toast.LENGTH_SHORT).show();
+                        Log.e("DEBUG", "Error fetching tasks: ", taskResult.getException());
+                    }
+                });
     }
+
+
+
+    // ... The rest of your ProjectTaskActivity code remains the same ...
+
 
     private void deleteProjectFromFirestore() {
         if (auth == null || auth.getCurrentUser() == null) return;
@@ -122,4 +193,10 @@ public class ProjectTaskActivity extends AppCompatActivity {
 
         popup.show();
     }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        fetchTasksForProject();
+    }
+
 }
