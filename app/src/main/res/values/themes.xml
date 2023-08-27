@@ -6,7 +6,6 @@
         <item name="colorPrimaryVariant">@color/my_primary</item>
         <item name="colorOnPrimary">@color/white</item>
 <!--        <item name="androi">@color/white</item>-->
-
     </style>
 
     <style name="Theme.ManagementApp" parent="Base.Theme.ManagementApp" />

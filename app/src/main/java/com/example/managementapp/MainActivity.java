@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
             finish();
         } else {
-            String welcomeMessage = "Welcome, " + user.getDisplayName();
+            String welcomeMessage = user.getDisplayName();
             textView.setText(welcomeMessage);
         }
 

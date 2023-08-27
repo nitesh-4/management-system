@@ -5,102 +5,141 @@
     android:layout_height="match_parent"
     android:background="@color/my_primary">
 
-    <ImageButton
-        android:id="@+id/back_button"
-        android:layout_width="wrap_content"
+    <!-- Header outside the card -->
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:background="?android:attr/selectableItemBackground"
-        android:src="@drawable/baseline_arrow_back_24" />
+        android:orientation="vertical"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="20dp"
+        android:padding="16dp"
+        android:gravity="center_horizontal">
 
-    <TextView
-        android:id="@+id/projectTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="32sp"
-        android:layout_centerHorizontal="true"
-        android:textColor="@color/white"
-        android:text="Project Title"
-        android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/projectDescription"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="20sp"
-        android:layout_below="@id/projectTitle"
-        android:layout_centerHorizontal="true"
-        android:textColor="@color/white"
-        android:alpha="0.7"
-        android:text="Project Description" />
 
-    <TextView
-        android:id="@+id/projectDates"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="18sp"
-        android:layout_below="@id/projectDescription"
-        android:layout_centerHorizontal="true"
-        android:textColor="@color/white"
-        android:text="Start Date - End Date" />
+        <TextView
+            android:id="@+id/projectTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="32sp"
+            android:textColor="@color/white"
+            android:text="Project Title"
+            android:textStyle="bold"
+            android:layout_gravity="center_horizontal"
+            android:textAllCaps="true"
+            />
 
+        <TextView
+            android:id="@+id/projectDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:layout_gravity="center_horizontal"
+            android:textColor="@color/white"
+            android:alpha="0.7"
+            android:text="Project Description" />
+
+
+        <TextView
+            android:id="@+id/projectDates"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:layout_centerHorizontal="true"
+            android:textColor="@color/white"
+            android:text="Start Date - End Date" />
+    </LinearLayout>
+
+    <!-- CardView for Project Details -->
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/projectDates"
-        android:layout_marginTop="15dp"
+        android:layout_height="match_parent"
+        android:layout_marginTop="150dp"
         app:cardCornerRadius="28dp"
-        android:layout_marginBottom="-20dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp">
+        android:elevation="8dp">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/tasksRecyclerView"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="visible" />
+            android:orientation="vertical"
+            android:padding="16dp">
 
+            <ImageButton
+                android:id="@+id/back_button"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:text="back image button"
+                android:contentDescription="back image button"
+                android:background="?android:attr/selectableItemBackground"
+                android:src="@drawable/baseline_arrow_back_24"
+                android:layout_gravity="start" />
+
+
+            <!-- RecyclerView for Tasks -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/tasksRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:layout_marginTop="16dp" />
+
+            <TextView
+                android:id="@+id/noTasksTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:layout_gravity="center"
+                android:text="CREATE NEW TASKS"
+                android:textSize="18sp"
+                android:textColorHint="@color/white"
+                android:textStyle="bold"
+                android:alpha="0.7"
+                android:visibility="gone" /> <!-- Initially hidden -->
+
+            <Button
+                android:id="@+id/deleteProjectButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Delete Project"
+                android:backgroundTint="@color/black"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+
+            <Button
+                android:id="@+id/optionsButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Options"
+                android:backgroundTint="@color/black"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+
+
+        </LinearLayout>
     </androidx.cardview.widget.CardView>
 
-    <TextView
-        android:id="@+id/noTasksTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Create new tasks!"
-        android:layout_centerInParent="true"
-        android:textSize="20sp"
-        android:textColor="@color/white"
-        android:visibility="gone" />
-
+    <!-- Floating Action Button -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/createTaskButton"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
         android:layout_alignParentEnd="true"
-        android:layout_above="@+id/deleteProjectButton"
-        android:src="@drawable/baseline_add_24"
-        app:fabSize="normal" />
-
-    <Button
-        android:id="@+id/deleteProjectButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Delete Project"
-        android:layout_above="@id/optionsButton"
-        android:backgroundTint="@color/black"
-        android:textColor="@color/white"
-        android:textSize="18sp" />
-
-    <Button
-        android:id="@+id/optionsButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Options"
         android:layout_alignParentBottom="true"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
+        android:contentDescription="Create New Task"
         android:backgroundTint="@color/black"
-        android:textColor="@color/white"
-        android:textSize="18sp" />
+        app:fabSize="normal"
+        app:srcCompat="@drawable/baseline_add_24" />
 
+    <!-- Buttons at the Bottom -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_alignParentBottom="true"
+        android:gravity="center_horizontal">
+
+
+
+
+    </LinearLayout>
 </RelativeLayout>

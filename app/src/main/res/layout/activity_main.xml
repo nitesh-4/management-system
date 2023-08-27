@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     android:background="@color/my_primary">
 
+
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -18,15 +19,30 @@
             android:orientation="vertical"
             android:padding="16dp">
 
+
+
+            <TextView
+                android:id="@+id/welcomeMessage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="15dp"
+                android:layout_marginLeft="10dp"
+                android:text="Welcome,"
+                android:textSize="18sp"
+                />
+
             <!-- Welcome Text -->
             <TextView
                 android:id="@+id/welcomeText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
-                android:layout_marginTop="24dp"
-                android:text="Welcome, [UserName]"
-                android:textSize="18sp"
+                android:layout_marginTop="0dp"
+                android:layout_marginLeft="10dp"
+                android:text="[UserName]"
+                android:textSize="25sp"
+                android:textAllCaps="true"
                 android:textStyle="bold" />
 
             <!-- Profile Image -->
@@ -34,8 +50,8 @@
                 android:id="@+id/profileImageButton"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:layout_gravity="center_horizontal"
                 android:layout_marginTop="16dp"
+                android:layout_gravity="center_horizontal"
                 android:background="@drawable/circle_image"
                 android:contentDescription="User Profile Image"
                 android:src="@drawable/user" />
@@ -45,16 +61,21 @@
                 android:id="@+id/projectsRecyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp" />
+                android:layout_marginTop="16dp"
+
+                />
 
             <TextView
                 android:id="@+id/emptyProjectsText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="100dp"
+                android:layout_marginLeft="60dp"
                 android:text="CREATE NEW PROJECTS"
                 android:textSize="18sp"
+                android:alpha="0.7"
+                android:textColorHint="@color/white"
                 android:textStyle="bold"
                 android:visibility="gone" /> <!-- Initially hidden -->
 
@@ -64,13 +85,15 @@
     <!-- Floating Action Button -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_add_project"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
         android:contentDescription="Create New Project"
+        android:backgroundTint="@color/black"
+        app:fabSize="normal"
         app:srcCompat="@drawable/baseline_add_24" />
 
     <!-- Header outside the card similar to login -->
@@ -79,13 +102,14 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_alignParentTop="true"
+        android:layout_marginTop="20dp"
         android:padding="16dp"
         android:gravity="center_horizontal">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Welcome to CONNECTED"
+            android:text="CONNECTED"
             android:textStyle="bold"
             android:textColor="@color/white"
             android:textSize="32dp"
